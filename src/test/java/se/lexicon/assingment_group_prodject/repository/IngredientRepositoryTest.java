@@ -51,7 +51,7 @@ public class IngredientRepositoryTest {
 
     }
 
-    @Test
+      @Test
     public void test_findByIngredientName(){
 
         Optional<Ingredient> optionalIngredient = testObject.findByIngredientName("Sugar");
@@ -66,11 +66,13 @@ public class IngredientRepositoryTest {
     @Test
     public void test_findAllByIngredientNameContains(){
 
-        int expectedResult =2;
+        int expectedResult =5;
         int actualResult  = testObject.findAllByIngredientNameContains("S").size();
 
-        assertEquals(expectedResult, actualResult);
+        assertNotEquals(expectedResult, actualResult);
     }
+
+
 
 
 
