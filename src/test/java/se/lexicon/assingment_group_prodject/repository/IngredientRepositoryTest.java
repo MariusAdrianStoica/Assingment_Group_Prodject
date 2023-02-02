@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import se.lexicon.assingment_group_prodject.entity.Ingredient;
 import se.lexicon.assingment_group_prodject.exception.DataNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest
@@ -49,6 +50,29 @@ public class IngredientRepositoryTest {
         else throw new DataNotFoundException("Data NotFound Exception");
 
     }
+
+    @Test
+    public void test_findByIngredientName(){
+
+        Optional<Ingredient> optionalIngredient = testObject.findByIngredientName("Sugar");
+        assertTrue(optionalIngredient.isPresent());
+
+        Ingredient actualData = optionalIngredient.get();
+        Ingredient expectedIngredient =createdIngredient2;
+
+        assertEquals(expectedIngredient, actualData);
+    }
+
+    @Test
+    public void test_findAllByIngredientNameContains(){
+
+        int expectedResult =2;
+        int actualResult  = testObject.findAllByIngredientNameContains("S").size();
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+
 
 
 
