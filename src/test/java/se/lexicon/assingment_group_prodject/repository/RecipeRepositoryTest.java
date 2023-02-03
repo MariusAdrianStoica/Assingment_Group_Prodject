@@ -7,9 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import se.lexicon.assingment_group_prodject.entity.*;
 import se.lexicon.assingment_group_prodject.exception.DataNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,23 +25,39 @@ public class RecipeRepositoryTest {
     @Autowired
     RecipeIngredientRepository recipeIngredientRepository;
 
+    @Autowired
+    RecipeCategoryRepository recipeCategoryRepository;
+
+    @Autowired
+    RecipeInstructionRepository recipeInstructionRepository;
+
      Recipe createdRecipe1;
      Recipe createdRecipe2;
 
-     /*
-    List<Ingredient> ingredientList = new ArrayList<>();
-
-      */
-    List<RecipeIngredient> recipeIngredients = new ArrayList<>();
-
-
-
+     List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+     Set<RecipeCategory> recipeCategories= new HashSet<>();
 
     @BeforeEach
     public void setup(){
+
+        Ingredient ingredientDataTest = new Ingredient("Sugar");
+        Ingredient createdIngredientTest = ingredientRepository.save(ingredientDataTest);
+
+        RecipeIngredient recipeIngredientData = new RecipeIngredient(createdIngredientTest, 1, Measurement.HG);
+        RecipeIngredient createdRecipeIngredient = recipeIngredientRepository.save(recipeIngredientData);
+        recipeIngredients.add(createdRecipeIngredient);
+
+        RecipeCategory recipeCategory = new RecipeCategory("cakes");
+        RecipeCategory createdrecipeCategory = recipeCategoryRepository.save(recipeCategory);
+        recipeCategories.add(createdrecipeCategory);
+
         RecipeInstruction recipeInstruction1 = new RecipeInstruction("InstructionCake");
         Recipe recipeData1 = new Recipe("Cake", recipeInstruction1);
+
         createdRecipe1 = testObject.save(recipeData1);
+
+        createdRecipe1.setRecipeIngredients(recipeIngredients);
+        createdRecipe1.setCategories(recipeCategories);
 
         RecipeInstruction recipeInstruction2 = new RecipeInstruction("InstructionBread");
         Recipe recipeData2 = new Recipe("Bread", recipeInstruction2);
@@ -58,9 +72,16 @@ public class RecipeRepositoryTest {
         Recipe recipeDataTest = new Recipe("Test", recipeInstructionTest);
         Recipe createdRecipeTest = testObject.save(recipeDataTest);
 
+
         assertNotNull(createdRecipeTest);
         assertNotNull(createdRecipeTest.getId());
+        assertNotNull(createdRecipeTest.getInstruction());
 
+        assertEquals(0, createdRecipeTest.getRecipeIngredients().size());
+        assertEquals(0, createdRecipeTest.getCategories().size());
+
+        assertEquals(1, createdRecipe1.getRecipeIngredients().size());
+        assertEquals(1, createdRecipe1.getCategories().size());
     }
 
 
@@ -88,21 +109,6 @@ public class RecipeRepositoryTest {
     @Test
     public void test_findAllByRecipeNameAndRecipeIngredientsContains(){
 
-        Ingredient ingredientData1 = new Ingredient("Salt");
-        Ingredient createdIngredient1 = ingredientRepository.save(ingredientData1);
-
-        RecipeIngredient recipeIngredientData1 = new RecipeIngredient(createdIngredient1, 2, Measurement.TSP);
-
-        assertNotNull();
-        /*
-        recipeIngredients.add(recipeIngredientData1);
-
-        createdRecipe1.addRecipeIngredient(recipeIngredientData1);
-        createdRecipe2.addRecipeIngredient(recipeIngredientData1);
-
-        assertNotNull(createdRecipe1.getRecipeIngredients());
-
-        /*
         int expectedResult =2;
         int actualResult  = testObject.findAllByRecipeIngredientsContains("Salt").size();
         assertEquals(expectedResult, actualResult);
