@@ -4,12 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import se.lexicon.assingment_group_prodject.entity.Ingredient;
-import se.lexicon.assingment_group_prodject.entity.Recipe;
-import se.lexicon.assingment_group_prodject.entity.RecipeIngredient;
-import se.lexicon.assingment_group_prodject.entity.RecipeInstruction;
+import se.lexicon.assingment_group_prodject.entity.*;
 import se.lexicon.assingment_group_prodject.exception.DataNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +30,11 @@ public class RecipeRepositoryTest {
      Recipe createdRecipe1;
      Recipe createdRecipe2;
 
-    List<Ingredient> ingredientList;
+     /*
+    List<Ingredient> ingredientList = new ArrayList<>();
+
+      */
+    List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
 
 
@@ -81,28 +83,33 @@ public class RecipeRepositoryTest {
     }
 
 
-    /*
+/*
 
     @Test
-    public void test_findAllByRecipeIngredientsContains(){
+    public void test_findAllByRecipeNameAndRecipeIngredientsContains(){
 
         Ingredient ingredientData1 = new Ingredient("Salt");
         Ingredient createdIngredient1 = ingredientRepository.save(ingredientData1);
 
+        RecipeIngredient recipeIngredientData1 = new RecipeIngredient(createdIngredient1, 2, Measurement.TSP);
 
-        ingredientList.add(createdIngredient1);
+        assertNotNull();
+        /*
+        recipeIngredients.add(recipeIngredientData1);
 
-        createdRecipe2.setRecipeIngredients();
+        createdRecipe1.addRecipeIngredient(recipeIngredientData1);
+        createdRecipe2.addRecipeIngredient(recipeIngredientData1);
 
+        assertNotNull(createdRecipe1.getRecipeIngredients());
 
-
-
+        /*
         int expectedResult =2;
-        int actualResult  = testObject.findAllByRecipeIngredientsContains("salt").size();
+        int actualResult  = testObject.findAllByRecipeIngredientsContains("Salt").size();
         assertEquals(expectedResult, actualResult);
+
+         */
     }
 
-     */
 
 
 
@@ -111,4 +118,5 @@ public class RecipeRepositoryTest {
 
 
 
-}
+
+

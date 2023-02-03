@@ -12,5 +12,6 @@ public interface RecipeIngredientRepository extends CrudRepository<RecipeIngredi
 
 
 
+
     
 }

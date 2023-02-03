@@ -12,5 +12,10 @@ public interface RecipeRepository extends CrudRepository<Recipe, Integer> {
 
 
     List<Recipe> findAllByRecipeNameContains(String recipeName);
+    //todo:
+    /*
     List<Recipe> findAllByRecipeIngredientsContains(String ingredientName);
+    List<Recipe> findAllByRecipeNameAndRecipeIngredientsContains(String ingredientName);
+
+     */
 }
