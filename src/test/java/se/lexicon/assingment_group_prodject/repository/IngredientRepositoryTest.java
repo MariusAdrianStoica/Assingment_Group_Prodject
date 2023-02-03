@@ -66,6 +66,8 @@ public class IngredientRepositoryTest {
     @Test
     public void test_findAllByIngredientNameContains(){
 
+
+
         int expectedResult =5;
         int actualResult  = testObject.findAllByIngredientNameContains("S").size();
 
