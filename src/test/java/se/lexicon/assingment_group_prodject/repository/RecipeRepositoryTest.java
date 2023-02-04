@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RecipeRepositoryTest {
 
 
-
     @Autowired
     RecipeRepository testObject;
 
@@ -31,14 +30,14 @@ public class RecipeRepositoryTest {
     @Autowired
     RecipeInstructionRepository recipeInstructionRepository;
 
-     Recipe createdRecipe1;
-     Recipe createdRecipe2;
+    Recipe createdRecipe1;
+    Recipe createdRecipe2;
 
-     List<RecipeIngredient> recipeIngredients = new ArrayList<>();
-     Set<RecipeCategory> recipeCategories= new HashSet<>();
+    List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+    Set<RecipeCategory> recipeCategories = new HashSet<>();
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
 
         Ingredient ingredientDataTest = new Ingredient("Sugar");
         Ingredient createdIngredientTest = ingredientRepository.save(ingredientDataTest);
@@ -52,6 +51,7 @@ public class RecipeRepositoryTest {
         recipeCategories.add(createdrecipeCategory);
 
         RecipeInstruction recipeInstruction1 = new RecipeInstruction("InstructionCake");
+
         Recipe recipeData1 = new Recipe("Cake", recipeInstruction1);
 
         createdRecipe1 = testObject.save(recipeData1);
@@ -62,11 +62,14 @@ public class RecipeRepositoryTest {
         RecipeInstruction recipeInstruction2 = new RecipeInstruction("InstructionBread");
         Recipe recipeData2 = new Recipe("Bread", recipeInstruction2);
         createdRecipe2 = testObject.save(recipeData2);
+
+        createdRecipe2.setRecipeIngredients(recipeIngredients);
+        createdRecipe2.setCategories(recipeCategories);
     }
 
 
     @Test
-    public void test_add(){
+    public void test_add() {
 
         RecipeInstruction recipeInstructionTest = new RecipeInstruction("InstructionTest");
         Recipe recipeDataTest = new Recipe("Test", recipeInstructionTest);
@@ -86,7 +89,7 @@ public class RecipeRepositoryTest {
 
 
     @Test
-    public void test_remove(){
+    public void test_remove() {
 
         Optional<Recipe> optionalRecipe = testObject.findById(createdRecipe2.getId());
 
@@ -96,25 +99,28 @@ public class RecipeRepositoryTest {
     }
 
     @Test
-    public void test_findAllByRecipeNameContains(){
+    public void test_findAllByRecipeNameContains() {
 
-        int expectedResult =2;
-        int actualResult  = testObject.findAllByRecipeNameContains("a").size();
+        int expectedResult = 2;
+        int actualResult = testObject.findAllByRecipeNameContains("a").size();
         assertEquals(expectedResult, actualResult);
     }
 
 
-/*
-
+    /*
     @Test
-    public void test_findAllByRecipeNameAndRecipeIngredientsContains(){
+    public void test_findAllByRecipeIngredientsContains() {
 
-        int expectedResult =2;
-        int actualResult  = testObject.findAllByRecipeIngredientsContains("Salt").size();
+        int expectedResult = 2;
+        int actualResult = testObject.findAllByRecipeIngredientsContains(recipeIngredientRepository.findByIngredient_IngredientName("Sugar").get()).size();
+
         assertEquals(expectedResult, actualResult);
 
-         */
+
     }
+
+     */
+}
 
 
 
