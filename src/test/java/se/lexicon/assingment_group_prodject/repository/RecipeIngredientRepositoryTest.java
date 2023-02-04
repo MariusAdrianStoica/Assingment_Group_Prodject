@@ -41,27 +41,27 @@ public class RecipeIngredientRepositoryTest{
     @Test
     public void test_add(){
 
-        Ingredient ingredientDataTest = new Ingredient("Sugar");
+        Ingredient ingredientDataTest = new Ingredient("milk");
         Ingredient createdIngredientTest = ingredientRepository.save(ingredientDataTest);
 
         RecipeIngredient recipeIngredientData = new RecipeIngredient(createdIngredientTest, 1, Measurement.HG);
         RecipeIngredient createdRecipeIngredient = recipeIngredientRepository.save(recipeIngredientData);
 
-        assertNotNull(createdRecipeIngredient);
-        assertNotNull(createdRecipeIngredient.getIngredient());
-        assertNull(createdRecipeIngredient.getRecipe());
+        assertNotNull(createdRecipeIngredient1);
+        assertNotNull(createdRecipeIngredient1.getIngredient());
+        assertNull(createdRecipeIngredient1.getRecipe());
 
     }
 
     @Test
     public void test_findByIngredient_IngredientName(){
 
-        Optional<RecipeIngredient> found = recipeIngredientRepository.findByIngredient_IngredientName("Salt");
+        Optional<RecipeIngredient> found = recipeIngredientRepository.findByIngredient_IngredientName("Sugar");
         assertTrue(found.isPresent());
 
         RecipeIngredient actual = found.get();
 
-        assertEquals(createdRecipeIngredient1, actual);
+        assertEquals(createdRecipeIngredient2, actual);
 
     }
 }

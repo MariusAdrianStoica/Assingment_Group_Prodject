@@ -39,36 +39,51 @@ public class RecipeRepositoryTest {
     @BeforeEach
     public void setup() {
 
-        Ingredient ingredientDataTest = new Ingredient("Sugar");
-        Ingredient createdIngredientTest = ingredientRepository.save(ingredientDataTest);
+        //1st ingredient
+        Ingredient ingredientData1 = new Ingredient("Sugar");
+        Ingredient createdIngredient1 = ingredientRepository.save(ingredientData1);
 
-        RecipeIngredient recipeIngredientData = new RecipeIngredient(createdIngredientTest, 1, Measurement.HG);
-        RecipeIngredient createdRecipeIngredient = recipeIngredientRepository.save(recipeIngredientData);
-        recipeIngredients.add(createdRecipeIngredient);
+        //1st recipeIngredient
+        RecipeIngredient recipeIngredient1 = new RecipeIngredient(createdIngredient1, 1, Measurement.HG);
+        RecipeIngredient createdRecipeIngredient1 = recipeIngredientRepository.save(recipeIngredient1);
+        recipeIngredients.add(createdRecipeIngredient1);
 
-        RecipeCategory recipeCategory = new RecipeCategory("cakes");
-        RecipeCategory createdrecipeCategory = recipeCategoryRepository.save(recipeCategory);
-        recipeCategories.add(createdrecipeCategory);
+        //2nd ingredient
+        Ingredient ingredientData2 = new Ingredient("Potato");
+        Ingredient createdIngredient2 = ingredientRepository.save(ingredientData2);
 
+        //2nd recipeIngredient
+        RecipeIngredient recipeIngredient2 = new RecipeIngredient(createdIngredient2, 1, Measurement.KG);
+        RecipeIngredient createdRecipeIngredient2 = recipeIngredientRepository.save(recipeIngredient2);
+        recipeIngredients.add(createdRecipeIngredient2);
+
+        // 1st category
+        RecipeCategory recipeCategory1 = new RecipeCategory("cakes");
+        RecipeCategory createdRecipeCategory1 = recipeCategoryRepository.save(recipeCategory1);
+        recipeCategories.add(createdRecipeCategory1);
+
+        //2nd category
         RecipeCategory recipeCategory2 = new RecipeCategory("Weekend");
-        RecipeCategory createdRecipeCategory2 = recipeCategoryRepository.save(recipeCategory);
+        RecipeCategory createdRecipeCategory2 = recipeCategoryRepository.save(recipeCategory2);
         recipeCategories.add(createdRecipeCategory2);
 
+        //1st instruction
         RecipeInstruction recipeInstruction1 = new RecipeInstruction("InstructionCake");
 
-        Recipe recipeData1 = new Recipe("Cake", recipeInstruction1);
-
-        createdRecipe1 = testObject.save(recipeData1);
-
-        createdRecipe1.setRecipeIngredients(recipeIngredients);
-        createdRecipe1.setCategories(recipeCategories);
-
+        //2nd  instruction
         RecipeInstruction recipeInstruction2 = new RecipeInstruction("InstructionBread");
+
+        //1st recipe
+        Recipe recipeData1 = new Recipe("Cake", recipeInstruction1);
+        createdRecipe1 = testObject.save(recipeData1);
+        createdRecipe1.addRecipeIngredient(createdRecipeIngredient1);
+        createdRecipe1.addRecipeCategory(createdRecipeCategory1);
+
+        //2nd recipe
         Recipe recipeData2 = new Recipe("Bread", recipeInstruction2);
         createdRecipe2 = testObject.save(recipeData2);
-
-        createdRecipe2.setRecipeIngredients(recipeIngredients);
-        createdRecipe2.setCategories(recipeCategories);
+        createdRecipe2.addRecipeIngredient(createdRecipeIngredient2);
+        createdRecipe2.addRecipeCategory(createdRecipeCategory2);
     }
 
 
@@ -111,25 +126,60 @@ public class RecipeRepositoryTest {
     }
 
 
-    /*
+/*
+
     @Test
     public void test_findAllByRecipeIngredientsContains() {
 
         int expectedResult = 2;
-        int actualResult = testObject.findAllByRecipeIngredientsContains(recipeIngredientRepository.findByIngredient_IngredientName("Sugar").get()).size();
+
+        RecipeIngredient found = recipeIngredientRepository.findByIngredient_IngredientName("Potato").get();
+
+        int actualResult = testObject.findAllByRecipeIngredientsContains(found).size();
 
         assertEquals(expectedResult, actualResult);
     }
-     */
+
+ */
+
+
+
     @Test
     public void test_findAllByCategoriesContains(){
 
-        int expected = 2;
-        int actual = testObject.findAllByCategoriesContains(recipeCategoryRepository.findByCategory("cakes").get()).size();
+        int expected = 1;
+        int actual = testObject.findAllByCategoriesContains(recipeCategoryRepository.findByCategoryIgnoreCase("weekend").get()).size();
 
         assertEquals(expected, actual);
 
     }
+
+
+    /*
+    @Test
+    public void test_findAllByCategoriesIn(){
+
+        int expected = 2;
+        int actual = testObject.findAllByCategoriesIn(recipeCategoryRepository.findAll()).size();
+
+        assertEquals(expected, actual);
+
+    }
+/*
+
+    @Test
+    public void test_findAllRecipesByCategoryName(){
+
+        int expected = 1;
+        int actual = testObject.findAllRecipesByCategoryName("cakes").size();
+
+        assertEquals(expected, actual);
+
+    }
+
+     */
+
+
 }
 
 
