@@ -50,6 +50,10 @@ public class RecipeRepositoryTest {
         RecipeCategory createdrecipeCategory = recipeCategoryRepository.save(recipeCategory);
         recipeCategories.add(createdrecipeCategory);
 
+        RecipeCategory recipeCategory2 = new RecipeCategory("Weekend");
+        RecipeCategory createdRecipeCategory2 = recipeCategoryRepository.save(recipeCategory);
+        recipeCategories.add(createdRecipeCategory2);
+
         RecipeInstruction recipeInstruction1 = new RecipeInstruction("InstructionCake");
 
         Recipe recipeData1 = new Recipe("Cake", recipeInstruction1);
@@ -115,11 +119,17 @@ public class RecipeRepositoryTest {
         int actualResult = testObject.findAllByRecipeIngredientsContains(recipeIngredientRepository.findByIngredient_IngredientName("Sugar").get()).size();
 
         assertEquals(expectedResult, actualResult);
+    }
+     */
+    @Test
+    public void test_findAllByCategoriesContains(){
 
+        int expected = 2;
+        int actual = testObject.findAllByCategoriesContains(recipeCategoryRepository.findByCategory("cakes").get()).size();
+
+        assertEquals(expected, actual);
 
     }
-
-     */
 }
 
 

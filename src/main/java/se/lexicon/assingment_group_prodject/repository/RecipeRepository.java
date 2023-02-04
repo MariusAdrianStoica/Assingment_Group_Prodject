@@ -4,9 +4,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import se.lexicon.assingment_group_prodject.entity.Ingredient;
 import se.lexicon.assingment_group_prodject.entity.Recipe;
+import se.lexicon.assingment_group_prodject.entity.RecipeCategory;
 import se.lexicon.assingment_group_prodject.entity.RecipeIngredient;
 
 import java.util.List;
+import java.util.Locale;
 
 @Repository
 public interface RecipeRepository extends CrudRepository<Recipe,  Integer> {
@@ -23,4 +25,6 @@ public interface RecipeRepository extends CrudRepository<Recipe,  Integer> {
     List<Recipe> findAllByRecipeNameAndRecipeIngredientsContains(String ingredientName);
 
      */
+
+    List<Recipe> findAllByCategoriesContains(RecipeCategory recipeCategory);
 }
