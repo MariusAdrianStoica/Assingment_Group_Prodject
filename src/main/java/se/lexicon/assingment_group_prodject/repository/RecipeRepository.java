@@ -20,7 +20,7 @@ public interface RecipeRepository extends CrudRepository<Recipe,  Integer> {
     /**Search for all recipes that contains a specified ingredient name.
     e.g. potato, tomato, salt, etc */
 
-    //List<Recipe> findAllByRecipeIngredientsContains(RecipeIngredient recipeIngredient);
+    List<Recipe> findAllByRecipeIngredientsContains (RecipeIngredient recipeIngredient);
 
 
     /**Search for all recipes that belong to a specific recipe category.
@@ -30,7 +30,7 @@ public interface RecipeRepository extends CrudRepository<Recipe,  Integer> {
 
    /**  Search for all recipes that match one or more categories.
    //e.g. {”Spicy”,”Mexican”,”Weekend”}*/
-   //List<Recipe> findAll
+   List<Recipe> findAllByCategoriesIsNotNull();
 
 
 

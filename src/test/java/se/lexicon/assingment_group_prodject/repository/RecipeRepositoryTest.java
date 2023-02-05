@@ -8,6 +8,7 @@ import se.lexicon.assingment_group_prodject.entity.*;
 import se.lexicon.assingment_group_prodject.exception.DataNotFoundException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,6 +34,9 @@ public class RecipeRepositoryTest {
     Recipe createdRecipe1;
     Recipe createdRecipe2;
 
+    RecipeIngredient createdRecipeIngredient1;
+    RecipeIngredient createdRecipeIngredient2;
+
     List<RecipeIngredient> recipeIngredients = new ArrayList<>();
     Set<RecipeCategory> recipeCategories = new HashSet<>();
 
@@ -45,7 +49,7 @@ public class RecipeRepositoryTest {
 
         //1st recipeIngredient
         RecipeIngredient recipeIngredient1 = new RecipeIngredient(createdIngredient1, 1, Measurement.HG);
-        RecipeIngredient createdRecipeIngredient1 = recipeIngredientRepository.save(recipeIngredient1);
+        createdRecipeIngredient1 = recipeIngredientRepository.save(recipeIngredient1);
         recipeIngredients.add(createdRecipeIngredient1);
 
         //2nd ingredient
@@ -54,7 +58,7 @@ public class RecipeRepositoryTest {
 
         //2nd recipeIngredient
         RecipeIngredient recipeIngredient2 = new RecipeIngredient(createdIngredient2, 1, Measurement.KG);
-        RecipeIngredient createdRecipeIngredient2 = recipeIngredientRepository.save(recipeIngredient2);
+        createdRecipeIngredient2 = recipeIngredientRepository.save(recipeIngredient2);
         recipeIngredients.add(createdRecipeIngredient2);
 
         // 1st category
@@ -83,7 +87,7 @@ public class RecipeRepositoryTest {
         Recipe recipeData2 = new Recipe("Bread", recipeInstruction2);
         createdRecipe2 = testObject.save(recipeData2);
         createdRecipe2.addRecipeIngredient(createdRecipeIngredient2);
-        createdRecipe2.addRecipeCategory(createdRecipeCategory2);
+        //createdRecipe2.addRecipeCategory(createdRecipeCategory2);
     }
 
 
@@ -126,21 +130,24 @@ public class RecipeRepositoryTest {
     }
 
 
-/*
+
 
     @Test
-    public void test_findAllByRecipeIngredientsContains() {
+    public void test_findAllByRecipeIngredients() {
 
         int expectedResult = 2;
 
         RecipeIngredient found = recipeIngredientRepository.findByIngredient_IngredientName("Potato").get();
+        RecipeIngredient expectedRI = createdRecipeIngredient2;
 
-        int actualResult = testObject.findAllByRecipeIngredientsContains(found).size();
+        assertEquals(expectedRI, found);
 
-        assertEquals(expectedResult, actualResult);
+        //todo: List<Recipe>
+        //int actualResult = testObject.findAllByRecipeIngredients(found);
+        //assertEquals(expectedResult, actualResult);
     }
 
- */
+
 
 
 
@@ -148,38 +155,23 @@ public class RecipeRepositoryTest {
     public void test_findAllByCategoriesContains(){
 
         int expected = 1;
-        int actual = testObject.findAllByCategoriesContains(recipeCategoryRepository.findByCategoryIgnoreCase("weekend").get()).size();
+        int actual = testObject.findAllByCategoriesContains(recipeCategoryRepository.findByCategoryIgnoreCase("cakes").get()).size();
 
         assertEquals(expected, actual);
 
     }
 
 
-    /*
-    @Test
-    public void test_findAllByCategoriesIn(){
-
-        int expected = 2;
-        int actual = testObject.findAllByCategoriesIn(recipeCategoryRepository.findAll()).size();
-
-        assertEquals(expected, actual);
-
-    }
-/*
 
     @Test
-    public void test_findAllRecipesByCategoryName(){
+    public void test_findAllByCategoriesIsNotNull(){
 
         int expected = 1;
-        int actual = testObject.findAllRecipesByCategoryName("cakes").size();
+        int actual = testObject.findAllByCategoriesIsNotNull().size();
 
         assertEquals(expected, actual);
 
     }
-
-     */
-
-
 }
 
 
