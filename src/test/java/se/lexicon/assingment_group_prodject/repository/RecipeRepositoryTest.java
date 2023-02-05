@@ -133,17 +133,18 @@ public class RecipeRepositoryTest {
 
 
     @Test
-    public void test_findAllByRecipeIngredients() {
+    public void test_findAllByRecipeIngredientsContains() {
 
         int expectedResult = 2;
 
         RecipeIngredient found = recipeIngredientRepository.findByIngredient_IngredientName("Potato").get();
         RecipeIngredient expectedRI = createdRecipeIngredient2;
 
+
         assertEquals(expectedRI, found);
 
-        //todo: List<Recipe>
-        //int actualResult = testObject.findAllByRecipeIngredients(found);
+        //todo: I have the RecipeIngredient but I need a method to find all Recipes
+        //int actualResult = testObject.findAllByRecipeIngredientsContains(found).size();
         //assertEquals(expectedResult, actualResult);
     }
 

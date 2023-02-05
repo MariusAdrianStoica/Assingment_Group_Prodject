@@ -15,12 +15,11 @@ public interface RecipeRepository extends CrudRepository<Recipe,  Integer> {
     /**Search for recipes where recipe name contains specified String.*/
     List<Recipe> findAllByRecipeNameContains(String recipeName);
     //todo:
-
-
     /**Search for all recipes that contains a specified ingredient name.
     e.g. potato, tomato, salt, etc */
 
     List<Recipe> findAllByRecipeIngredientsContains (RecipeIngredient recipeIngredient);
+    //List<Recipe> findAllByRecipeIngredientsIsLikeIgnoreCase (RecipeIngredient recipeIngredient);
 
 
     /**Search for all recipes that belong to a specific recipe category.
@@ -31,12 +30,4 @@ public interface RecipeRepository extends CrudRepository<Recipe,  Integer> {
    /**  Search for all recipes that match one or more categories.
    //e.g. {”Spicy”,”Mexican”,”Weekend”}*/
    List<Recipe> findAllByCategoriesIsNotNull();
-
-
-
-/*
-    @Query("SELECT R FROM Recipe R WHERE R.categories = (SELECT RC FROM RecipeCategory RC WHERE RC.category =: ctg) ")
-    List<Recipe> findAllRecipesByCategoryName(@Param("ctg") String category);
-
- */
 }
